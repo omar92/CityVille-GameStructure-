@@ -19,19 +19,9 @@ namespace CityVilleClone
 
         internal override void OnEnable()
         {
-            bool isResourcesSufficient = true;
-            for (int i = 0; i < ConstructionCost.Length; i++)
-            {
-                if (!ConstructionCost[i].IsResourceAvaliable())
-                {
-                    isResourcesSufficient = false;
-                     Debug.Log("Resource " + ConstructionCost[i].resource.name + " is not sufficient");
-                   
-                    break;
-                }
-            }
 
-            if (isResourcesSufficient)
+
+            if (IsResourcesSufficient())
             {
                 OnConstructionStartE.Invoke();
                 for (int i = 0; i < ConstructionCost.Length; i++)
@@ -46,6 +36,19 @@ namespace CityVilleClone
                 OnConstructionFailE.Invoke();
                 Destroy(gameObject);
             }
+        }
+
+        public bool IsResourcesSufficient()
+        {
+            for (int i = 0; i < ConstructionCost.Length; i++)
+            {
+                if (!ConstructionCost[i].IsResourceAvaliable())
+                {
+                  //  Debug.Log("Resource " + ConstructionCost[i].resource.name + " is not sufficient");
+                    return false;
+                }
+            }
+            return true;
         }
 
         private System.Collections.IEnumerator ConstructionCo(float constructionTime)

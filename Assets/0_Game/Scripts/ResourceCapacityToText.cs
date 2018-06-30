@@ -16,6 +16,6 @@ public class ResourceCapacityToText : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        text.text = resource.ResourceAmount + "";
+        text.text = resource.ResourceCapacity    + "";
     }
 }
