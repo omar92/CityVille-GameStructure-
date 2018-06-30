@@ -9,9 +9,10 @@ namespace CityVilleClone
     /// </summary>
     public abstract class Block : MonoBehaviour
     {
-        private Vector2 size;
+        [Header("Block Attributes")]
+        public Vector2 size;
         [SerializeField]
-        internal Vector2 Size
+        public Vector2 Size
         {
             get
             {

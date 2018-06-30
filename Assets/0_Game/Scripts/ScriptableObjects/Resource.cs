@@ -9,17 +9,13 @@ public class Resource : ScriptableObject
 {
 
     private List<StorageBlock> storages;
-
     [SerializeField]
     private int resourceAmount;
-   
     public int ResourceAmount { get { return resourceAmount; } }
-
     [SerializeField]
     private int resourceCapacity;
+    public int ResourceCapacity { get { return resourceCapacity; } }
 
-    public int GetResourceCapacity()
-    { return resourceAmount; }
     public List<StorageBlock> Storages
     {
         get
@@ -30,16 +26,22 @@ public class Resource : ScriptableObject
 
     }
 
-    internal void Add(StorageBlock storageBlock)
+    internal void Init()
+    {
+        resourceAmount = 0;
+        resourceCapacity = 0;
+    }
+
+    internal void Register(StorageBlock storageBlock)
     {
         if (!Storages.Contains(storageBlock))
         {
             Storages.Add(storageBlock);
             resourceCapacity += storageBlock.storageCapacity;
-           // resourceAmount += storageBlock.StoredAmount;
+            // resourceAmount += storageBlock.StoredAmount;
         }
     }
-    internal void Remove(StorageBlock storageBlock)
+    internal void UnRegister(StorageBlock storageBlock)
     {
         if (Storages.Contains(storageBlock))
         {
@@ -58,9 +60,9 @@ public class Resource : ScriptableObject
         int collectedResources = 0;
         if (resourceAmount > amount)
         {
-            for (int i = 0; i < storages.Count && amount > 0; i++)
+            for (int i = 0; i < Storages.Count && amount > 0; i++)
             {
-                storages[i].Withdraw(amount, out collectedResources);
+                Storages[i].Withdraw(amount, out collectedResources);
                 amount -= collectedResources;
                 resourceAmount -= collectedResources;
             }
@@ -76,9 +78,9 @@ public class Resource : ScriptableObject
     {
         Remaining = amount;
         int stored = 0;
-        for (int i = 0; i < storages.Count && amount > 0 && resourceAmount < resourceCapacity; i++)
+        for (int i = 0; i < Storages.Count && amount > 0 && resourceAmount < resourceCapacity; i++)
         {
-            storages[i].Store(Remaining, out stored);
+            Storages[i].Store(Remaining, out stored);
             Remaining -= stored;
             resourceAmount += stored;
         }
@@ -89,4 +91,5 @@ public class Resource : ScriptableObject
     {
         return amount <= ResourceAmount;
     }
+
 }

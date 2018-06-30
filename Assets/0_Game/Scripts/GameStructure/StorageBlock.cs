@@ -5,6 +5,7 @@ namespace CityVilleClone
 {
     public class StorageBlock : BuildingBlock
     {
+        [Header("Storage Attributes")]
         public Resource StorageType;
         public int storageCapacity;
         [SerializeField]
@@ -13,21 +14,22 @@ namespace CityVilleClone
         {
             get { return m_storedAmount; }
         }
-        private int m_emptySpace;
-        public int EmptySpace { get { return m_emptySpace; } }
+  
+        public int EmptySpace { get { return storageCapacity - m_storedAmount; } }
 
         public bool IsFull { get { return storageCapacity == StoredAmount; } }
         public bool IsEmpty { get { return StoredAmount == 0; } }
 
 
-        internal override void OnEnable()
-        {
-            StorageType.Add(this);
-        }
 
         internal override void OnDisable()
         {
-            StorageType.Remove(this);
+            StorageType.UnRegister(this);
+        }
+
+        public override void OnConstructionDone()
+        {
+            StorageType.Register(this);
         }
 
 
@@ -45,13 +47,11 @@ namespace CityVilleClone
             {
                 StoredAmount = EmptySpace;
                 m_storedAmount = storageCapacity;
-                m_emptySpace = 0;
                 return false;
             }
 
             m_storedAmount += requestedAmount;
             StoredAmount = requestedAmount;
-            m_emptySpace = storageCapacity - m_storedAmount;
             return true;
         }
 
@@ -69,13 +69,11 @@ namespace CityVilleClone
             {
                 WithdrawAmount = m_storedAmount;
                 m_storedAmount = 0;
-                m_emptySpace = storageCapacity;
                 return false;
             }
 
             m_storedAmount -= requestedAmount;
             WithdrawAmount = requestedAmount;
-            m_emptySpace = storageCapacity - m_storedAmount;
             return true;
         }
 

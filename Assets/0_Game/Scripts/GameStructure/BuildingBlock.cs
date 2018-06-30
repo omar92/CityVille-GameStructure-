@@ -1,13 +1,19 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CityVilleClone
 {
     public class BuildingBlock : Block
     {
-
+        [Header("Building Attributes")]
         public float ConstructionTime;
         public SResourceAmount[] ConstructionCost = new SResourceAmount[0];
+        public UnityEvent OnConstructionStartE;
+        public UnityEvent OnConstructionFailE;
+        public UnityEvents.F OnConstructioProgressE;
+        public UnityEvent OnConstructionDoneE;
+
 
         private Coroutine ConstructionCoRef;
 
@@ -19,13 +25,15 @@ namespace CityVilleClone
                 if (!ConstructionCost[i].IsResourceAvaliable())
                 {
                     isResourcesSufficient = false;
-                    Debug.LogError("Resource " + ConstructionCost[i].resource.name + " is not sufficient");
+                     Debug.Log("Resource " + ConstructionCost[i].resource.name + " is not sufficient");
+                   
                     break;
                 }
             }
 
             if (isResourcesSufficient)
             {
+                OnConstructionStartE.Invoke();
                 for (int i = 0; i < ConstructionCost.Length; i++)
                 {
                     ConstructionCost[i].Withdraw();
@@ -35,7 +43,8 @@ namespace CityVilleClone
             }
             else
             {
-                Destroy(this);
+                OnConstructionFailE.Invoke();
+                Destroy(gameObject);
             }
         }
 
@@ -52,11 +61,11 @@ namespace CityVilleClone
 
         public virtual void OnConstructionProgress(float remainingTIme)
         {
-
+            OnConstructioProgressE.Invoke(remainingTIme);
         }
         public virtual void OnConstructionDone()
         {
-
+            OnConstructionDoneE.Invoke();
         }
 
         internal override void OnDisable()
