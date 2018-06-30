@@ -46,7 +46,7 @@ namespace CityVilleClone
 
                     while (remainingTime >= 0)
                     {
-                        OnManufacturingProgress(ManufacturingTime);
+                        OnManufacturingProgress(remainingTime);
                         yield return new WaitForSeconds(1f);
                         remainingTime -= 1;
                     }

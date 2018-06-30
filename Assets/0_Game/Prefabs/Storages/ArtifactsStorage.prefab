@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 65902757853291044}
   - component: {fileID: 114048415826463380}
   - component: {fileID: 114273327046966468}
+  - component: {fileID: 114584419227522180}
   m_Layer: 0
   m_Name: ArtifactsStorage
   m_TagString: Untagged
@@ -164,7 +165,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnConstructioProgressE:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114584419227522180}
+        m_MethodName: UpdateScale
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEvents.F, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnConstructionDoneE:
@@ -205,6 +217,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca439cec481ffd4687f1f86830e341f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114584419227522180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1489435470458108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb56a6374de97fa4db40fe8b158ad9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114665444061249492
